@@ -1,0 +1,388 @@
+#Proyecto de programacion, facultad de ingenieria de la UCV
+#Estudiante: Adriana Teixeira Mendoza C.I: 26738456
+
+#Todo texto en este programa estara libre de acentos para evitar errores en su lectura
+
+#el programa original 'agenda.py' fue cambiado casi por completo, debido a que no entendia completamente algunas funciones, termine haciendolo de esta manera para trabajar las asignaciones, aun asi la agenda cumple su cometido
+
+#Tener en cuenta que las explicaciones de lineas en las funciones que se relacionan a la agenda 1, y las que relacionan la agenda 2, son analogas entre si (con la diferencia claro esta de sus parametros), de todas maneras fueron planteadas en algunos casos para ambas 
+
+#presentacion
+print("Bienvenido al programa de gestion de contactos")
+print("Aqui podra gestionar dos agendas\n")
+
+#Se crean las variables y los contadores que manipularemos en ambas agendas
+agenda_1 = []
+agenda_2=[]
+list_1 =[]
+list_2 = []
+count_1=0
+count_2=0
+
+#Funcion para crear un contacto en la agenda 1
+def crear_contacto_1(agenda_1):
+#se valoran las variables importantes
+	nombre = input("\nIngrese el nombre del contacto: ")
+	numero = input("Ingrese el numero de telefono de {}: ".format(nombre))
+	direccion = input("Ingrese la de direccion de {}: ".format(nombre))
+	contacto = "Contacto {}: Nombre: {} , Numero: {} , Direccion: {}".format(len(agenda_1)+1,nombre, numero, direccion)
+#La variable contacto se aÃ±adirÃ¡ a la lista 'agenda_1' y adelante se usarÃ¡ Ã©sta ultima para la agenda 1 definitiva	
+	agenda_1.append(contacto)
+#El 'len(agenda_1)+1' no es mas que el numero de identificacion del contacto, mas adelante se usarÃ¡ para poder reacomodar la agenda en caso de eliminacion
+	print(contacto)
+	print("Nuevo contacto aÃ±adido")
+	list_1.append("Contacto {}: {} ; {}, {} ".format(len(agenda_1),nombre, numero, direccion))
+
+
+#Funcion para eliminar un contacto en la agenda 1
+def eliminar_contacto_1(agenda_1,list_1):
+	print("Identifique el numero del contacto que desea eliminar")
+#El siguiente ciclo corre sobre la lista 'list_2' en donde se encuentran los contactos de forma simple, y los imprime en pantalla
+	for i, j in enumerate(list_1):
+		print(j)
+
+	n = int(input("Ingrese el numero de contacto para eliminarlo: "))
+#La variable 'n' se usara para cambiar los numeros de los contactos para reorganizarlos
+	list_1.pop(n-1)
+#Se elimina el contacto de la lista
+	if n!=len(list_1)+1:
+#Y teniendo la condicion de que el contacto a eliminar no es el ultimo de la lista se procede
+		list_3=[]
+#Esta lista vacia nos ayudara a reorganizar
+		for i,j in enumerate(list_1):
+			if i+1<n:
+				list_3.append(j)
+#Con esta condicion decimos que los contactos anteriores al que se eliminÃ³ se aÃ±adiran a la lista 'list_3'
+			elif i+1 >= n:
+#Se dividira el string de la lista de contactos hasta el numero de identificacion y desde el hasta el final
+				a = j[0:8]
+				b = j[10: len(j)]
+				c = i+1
+#'c' sera la variacion del numero de contacto
+				d =str(c)
+#Usando la variable d, volvemos c un string para asi poder sumarlo al resto de partes sin errores
+				arreglo = a+" " + d+b
+#Aca se reacomodan los trozos de string, y se vuelven a unir con la diferencia de 'd' el cual identificara de forma correcta los contactos
+				list_3.append(arreglo)
+#Se aÃ±ade el arreglo a la lista 'list_3'
+	list_1=list_3
+#Y se iguala a la lista 'list_1'
+	for i, j in enumerate(list_1):
+#finalmente se imprime en pantalla la lista de contactos acomodada
+		print(j)
+#De manera analoga se procede con la lista 'agenda_1', con la diferencia de que esta no sera impresa en pantalla			
+	agenda_1.pop(n-1)
+	if n!=len(agenda_1)+1:
+		list_3=[]
+		for i,j in enumerate(agenda_1):
+			if i+1<n:
+				list_3.append(j)
+			elif i+1 >= n:
+				a = j[0:8]
+				b = j[10: len(j)]
+				c = i+1
+				d =str(c)
+				arreglo = a+" " + d+b
+				list_3.append(arreglo)
+		agenda_1 = list_3
+
+				
+#Funcion para crear un contacto en la agenda 2
+def crear_contacto_2(agenda_2):
+#Se valoran las variables importantes
+	nombre = input("Ingrese el nombre del contacto: ")
+	numero = input("Ingrese el numero de telefono de {}: ".format(nombre))
+	direccion = input("Ingrese la de direccion de {}: ".format(nombre))
+#La variable contacto se aÃ±adirÃ¡ a la lista 'agenda_2' y adelante se usarÃ¡ Ã©sta ultima para la agenda 2 definitiva
+	contacto = "Contacto {}: Nombre: {} , Numero: {} , Direccion: {}".format(len(agenda_2)+1,nombre, numero, direccion)
+#El 'len(agenda_2)+1' no es mas que el numero de identificacion del contacto, mas adelante se usarÃ¡ para poder reacomodar la agenda en caso de eliminacion
+	agenda_2.append(contacto)
+#La lista 'list_2' se usara solo para mostrarle al usuario en el panel (cuando sea necesario) la lista de contactos de forma simplificada
+	list_2.append("Contacto {}: {} ; {}, {} ".format(len(agenda_2),nombre, numero, direccion))
+	print("\nNuevo contacto aÃ±adido")
+	print(contacto)
+	
+		
+#Funcion para eliminar un contacto en la agenda_2
+def eliminar_contacto_2(agenda_2,list_2):
+	print("Identifique el numero del contacto que desea eliminar")
+#El siguiente ciclo corre sobre la lista 'list_2' en donde se encuentran lls contactos de forma simple, y los imprime en pantalla
+	for i, j in enumerate(list_2):
+		print(j)
+#La variable 'n' se usara para cambiar los numeros de los contactos para reorganizarlos
+	n = int(input("Ingrese el numero de contacto para eliminarlo: "))
+#Se elimina el contacto de la lista
+	list_2.pop(n-1)
+#Y teniendo la condicion de que el contacto a eliminar no es el ultimo de la lista se procede
+	if n!=len(list_2)+1:
+		list_3=[]
+#Esta lista vacia nos ayudara a reorganizar
+		for i,j in enumerate(list_2):
+			if i+1<n:
+				list_3.append(j)
+#Con esta condicion decimos que los contactos anteriores al que se eliminÃ³ se aÃ±adiran a la lista 'list_3'
+			elif i+1 >= n:
+#Se dividira el string de la lista de contactos hasta el numero de identificacion y desde el hasta el final, usando las variables a, y b
+				a = j[0:8]
+				b = j[10: len(j)]
+#'c' sera la variacion del numero de contacto
+				c = i+1
+				d =str(c)
+#Usando la variable d, volvemos c un string para asi poder sumarlo al resto de partes sin errores
+				arreglo = a+" " + d+b
+#Aca se reacomodan los trozos de string, y se vuelven a unir con la diferencia de 'd' el cual identificara de forma correcta los contactos
+				list_3.append(arreglo)
+#Se agregan los arreglos de a uno en uno por cada vuelta del ciclo en la lista 'list_3' para tener la lista arreglada
+	list_2=list_3
+#Se iguala a la lista 'list_3' para tener la nueva list_2
+	for i, j in enumerate(list_2):
+		print(j)
+#De manera analoga se procede con la agenda, con la diferencia de que esta no sera impresa en la pantalla
+	agenda_2.pop(n-1)
+	if n!=len(agenda_2)+1:
+		list_3=[]
+		for i,j in enumerate(agenda_2):
+			if i+1<n:
+				list_3.append(j)
+			elif i+1 >= n:
+				a = j[0:8]
+				b = j[10: len(j)]
+				c = i+1
+				d =str(c)
+				arreglo = a+" " + d+b
+				list_3.append(arreglo)
+		agenda_2 = list_3
+
+
+#Se define la funcion que convierte la agenda 1 en formato .txt
+def agenda_1_txt(agenda_1):
+#se crea el archivo 'agenda' en el formato
+	agenda = open('agenda_1.txt','wt')
+#Se corre el ciclo en la agenda_1, moviendose en sus contactos para aÃ±adirlos a la agenda
+	for i,j in enumerate(agenda_1):
+		agenda.write("{} \n\n".format(j))
+#al finalizar el ciclo se cierra la agenda
+	agenda.close()
+
+
+#Se define la funcion que convierte la agenda 2 en formato .txt
+def agenda_2_txt(agenda_2):
+#se crea el archivo agenda 
+	agenda2 = open('agenda_2.txt','wt')		
+#Se corre el ciclo en la agenda_2, moviendose en sus contactos
+	for i,j in enumerate(agenda_2):
+#Se agregan a la agenda2 antes de cerrar el archivo
+		agenda2.write("{}\n\n". format(j))
+	agenda2.close()
+	
+	
+#definimos la funcion que convertira la agenda en formato .json
+def agenda_1_json(agenda_1):
+#se crea la variable agenda1 con un string vacio
+	agenda1=" "
+#se corre el ciclo for en la agenda_1, y en cada vuelta aÃ±adira los contactos en la variable agenda1
+	for i,j in enumerate(agenda_1):
+		agenda1+=j
+#se importa la libreria
+	
+#no poseo la libreria json, y salta un error al correr el programa despues de importar la galeria, por ello desde aqui continua la estructura en los comentarios
+	
+	#import json
+	#whit open('agenda_1.json','w') as f:
+#se convierte a archivo .json
+		#json.dumps(agenda1,f,indent=4)
+
+#se procede de manera analoga para la agenda_2
+def agenda_2_json(agenda_2):
+	import json
+	agenda2=" \n"
+	for i,j in enumerate(agenda_2):
+		agenda2+=j
+	#whit open('agenda1.json','w') as f:
+	#	json.dumps(agenda2,f,indent=len(list_2))
+
+
+#El siguiente ciclo while correra siempre, hasta que llegue al break
+Flag = True
+while Flag:
+#Se da a escoger la agenda a gestionar
+	decision_1 = input("Que agenda desea gestionar? presione '1' o '2':  ")
+#Desde aqui estan las condiciones que administran a la agenda_1
+#Se usa la condicion del contador 'count_1==0' para llevar al usuario directamente a crear un nuevo contacto por ser la primera vez en usar la agenda
+	if decision_1 =='1' and count_1==0:
+#Se llama a la funcion
+		crear_contacto_1(agenda_1)
+#Se da la opcion de guardae la agenda
+		count_1+=1
+		decision_2 = input("\nDesea guardar la agenda? presione 's' o 'n': ")
+#Se vuelve minuscula la respuesta para minimizar errores
+		decision_2.lower()
+#En caso de que la respuesta no fuese ninguna de las propuestas, saltara un error explicando el fallo
+		if decision_2!='s' and decision_2!='n':
+			raise ValueError("\nError, opciÃ³n no vÃ¡lida. Las opciones vÃ¡lidas son 'txt y 'json.")
+#Si la respuesta es positiva se imprimira en pantalla las opciones que tiene
+		elif decision_2== 's':
+			formato= input("Ingrese el formato en el que desea descargar la agenda, 'txt' o 'json': ")
+			if formato=='txt':
+#Si el usuario escoge 'txt' se llamara a la funcion para convertir el archivo en .txt, e imprimira en pantalla que el proceso fue realizado
+					agenda_1_txt(agenda_1)
+					print("\nLa agenda 1 fue guardada como 'agenda_1.txt")
+			elif formato=='json':
+#Si el usuario escoge 'json' se llamara a la funcion para convertir la agenda en dicho formato e informara al usuario que el proceso fue realizado
+				agenda_1_json(agenda_1)
+				print("\nLa agenda 1 fue guardada como 'agenda_1.json")
+#Si el usuario no quiere guardar aun la agenda, el programa verificara su respuesta con un mensaje
+			else:
+				print("\nLa agenda_1 no ha sido guardada")
+
+#Cuando no es la primera vez usando la agenda_1 el contador 'count_1' se procede
+	elif count_1!=0 and decision_1=='1':
+#Al no ser la primera vez, se aÃ±adiran las opciones de 'crear', 'editar', 'eliminar', y 'salir', y las presentara al usuario
+		decision = input("\nDiga si quiere crear, editar o eliminar algun contacto ingresando:\n'crear', 'editar', 'eliminar'\nSi desea salir de la agenda ingrese 'salir': ")
+#Se vuelve minuscula la decision para minimizar errores
+		decision.lower()
+		if decision == "crear":
+#Si la decision es 'crear', se llamara a la funcion que crear contactos en la agenda_1
+			crear_contacto_1(agenda_1)
+			count_1+=1
+#Y volvera a dar la opcion de guardar la agenda como anteriormente
+			decision  = input("\nDesea descargar la agenda? ingrese 's' o 'n': ")
+			decision.lower()
+			if decision == 's':
+				formato= input("Ingrese el formato en el que desea descargar la agenda, 'txt' o 'json': ")
+				if formato=='txt':
+					agenda_1_txt(agenda_1)
+					print("\nLa agenda fue guardada como 'agenda_1.txt' ")
+				elif formato=='json':
+					agenda_1_json(agenda_1)
+					print("\nLa agenda fue guardada como 'agenda_1.json' ")
+
+				else:
+					raise ValueError("Error, opciÃ³n no vÃ¡lida. Las opciones vÃ¡lidas son 'txt' o 'json'.")
+					
+
+#Si la decision es eliminar se llamara a la funcion que elimina contactos en la agenda_1
+
+		elif decision == 'eliminar':
+			eliminar_contacto_1(agenda_1, list_1)
+			count_1+=-1
+			decision = input("\nDesea guardar la agenda? presione 's' o 'n': ")
+			decision.lower()
+			if decision =='s':
+				formato= input("Ingrese el formato en el que desea descargar la agenda_1 , 'txt' o 'json': ")
+				if formato=='txt':
+					agenda_1_txt(agenda_1)
+					print("\nLa agenda_1 fue guardada como agenda_1.txt")
+				elif formato=='json':
+					agenda_1_json(agenda_1)
+					print("\nLa agenda_1 fue guardada como agenda_1.json")
+				else:
+					raise ValueError("\nError, opciÃ³n no vÃ¡lida. Las opciones vÃ¡lidas son 'txt' o 'json'.")
+			elif decision=='n':
+				print("\nLa agenda_1 no fue guardada")
+			else:
+				raise ValueError("\nError, opciÃ³n no vÃ¡lida. Las opciones vÃ¡lidas son 's' o 'n'.")			
+#Si el usuario decide 'salir' finalizara el ciclo y finalizara el programa
+		elif decision == 'salir':
+			break
+
+#En caso de no responder con las opciones mostradas, saltara un error explicando el fallo
+		else:
+			raise ValueError("\nError, opciÃ³n no vÃ¡lida. Las opciones vÃ¡lidas son 'crear', 'editar', 'eliminar' y 'salir'")
+#Este contador es el que servira para decirle al programa que el usuario usa la agenda por primera vez, se le suma una unidad al finalizar el ciclo para que este tambien pueda usarse dentro de las funciones de la agenda_1
+
+	
+	
+#A partir de aqui vienen las condiciones que permiten gestionar la agenda_2 
+#Las explicaciones linea a linea son analogas a las anteriores (Que involucran a la agenda_1)
+	if len(agenda_1)==0 or len(list_1)==0:
+		count_1==0
+	elif len(agenda_2)==0 and len(list_2)==0:
+		count_2=0
+#En este caso, a parte de la condicion de escoger la agenda_2 ingresando '2', tenemos la del contador 'count_2', puesto que la gestion de esta agenda es independiente a la anterior
+	if decision_1 =='2' and count_2==0:
+		crear_contacto_2(agenda_2)
+		count_2+=1
+		decision_2 = input("\nDesea guardar la agenda_2? presione 's' o 'n': ")
+		decision_2.lower()
+		if decision_2=='s':
+			formato= input("Ingrese el formato en el que desea descargar la agenda_2 , 'txt' o 'json': ")
+			if formato=='txt':
+				agenda_2_txt(agenda_2)
+				print("\nLa agenda_2 fue guardada como agenda_2.txt")
+			elif formato=='json':
+				agenda_2_json(agenda_2)
+				print("\nLa agenda_2 fue guardada como agenda_2.json")
+			else:
+				raise ValueError("\nError, opciÃ³n no vÃ¡lida. Las opciones vÃ¡lidas son 'txt' o 'json'.")
+		elif decision_2=='n':
+			print("\nLa agenda_2 no fue guardada")
+		else:
+			raise ValueError("\nError, opciÃ³n no vÃ¡lida. Las opciones vÃ¡lidas son 's' o 'n'.")
+#En esta condicion es necesario no solo que el usuario decida usar la agenda_2, si no tambien que el contador sea distinto de cero, de lo contrario correria siempre el mensaje con todas las opciones a parte de 'crear contacto'
+	elif count_2!=0 and decision_1=='2':
+		decision = input("\nDiga si quiere crear, editar o eliminar algun contacto ingresando: 'crear', 'editar', o 'eliminar'\nSi desea salir de la agenda ingrese 'salir': ")
+		decision.lower()
+		if decision == "crear":
+			crear_contacto_2(agenda_2)
+			decision  = input("\nDesea descargar la agenda? ingrese 's' o 'n': ")
+			decision.lower()
+			if decision=='n':
+				print("\nLa agenda_2 no se ha guardado")
+			elif decision == 's':
+				formato= input("Ingrese el formato en el que desea descargar la agenda_2, 'txt' o 'json': ")
+				if formato=='txt':
+					agenda_2_txt(agenda_2)
+					print("La agenda fue guardada como 'agenda_2.txt' ")
+				elif formato=='json':
+					agenda_2_json(agenda_2)
+					print("la agenda fue guardada como 'agenda_2.json' ")
+				else:
+					raise ValueError("\nError, opciÃ³n no vÃ¡lida. Las opciones vÃ¡lidas son 'txt' o 'json'.")
+			else:
+				raise ValueError("\nError, opciÃ³n no vÃ¡lida. Las opciones vÃ¡lidas son 's' o 'n'.")	
+					
+		elif decision == "editar":
+			editar_contacto_2(agenda_2)
+			decision = input("\nDesea guardar la agenda? presione 's' o 'n': ")
+			decision.lower()
+			if decision =='n':
+				print("\nLa agenda_2 no fue guardada")
+			elif decision =='s':
+				formato= input("Ingrese el formato en el que desea descargar la agenda_2, 'txt' o 'json': ")
+				if formato=='txt':
+					agenda_2_txt(agenda_2)
+					print("La agenda fue guardada como 'agenda_2.txt' ")
+				elif formato=='json':
+					agenda_2_json(agenda_2)
+					print("La agenda fue guardada como 'agenda_2.json' ")
+				else:
+					raise ValueError("\nError, opciÃ³n no vÃ¡lida. Las opciones vÃ¡lidas son 'txt' o 'json'.")
+			else:
+				raise ValueError("\nError, opciÃ³n no vÃ¡lida. Las opciones vÃ¡lidas son 's' o 'n'.")
+		elif decision == 'eliminar':
+			eliminar_contacto_2(agenda_2, list_2)
+			count_2+=-1
+			decision = input("Desea guardar la agenda? presione 's' o 'n': ")
+			decision.lower()
+			if decision=='n':
+				print("La agenda_2 no ha sido guardada")
+			elif decision =='s':
+				formato= input("Ingrese el formato en el que desea descargar la agenda_2, 'txt' o 'json': ")
+				if formato=='txt':
+					agenda_2_txt(agenda_2)
+					print("\nLa agenda_2 fue guardada como: agenda_2.txt")
+				elif formato=='json':
+					agenda_2_json(agenda_2)
+					print("\nLa agenda_2 fue guardada como: agenda_2.json")
+				else:
+					raise ValueError("\nError, opciÃ³n no vÃ¡lida. Las opciones vÃ¡lidas son 'txt' o 'json'.")
+			else:
+				raise ValueError("\nError, opciÃ³n no vÃ¡lida. Las opciones vÃ¡lidas son 's' o 'n'.")			
+			
+		elif decision == 'salir':
+			print("\nFin del programa\nGracias por usar la agenda")
+			break
+		else:
+			raise ValueError("\nError, opciÃ³n no vÃ¡lida. Las opciones vÃ¡lidas son 'crear', 'editar', 'eliminar' y 'salir'")
+		count_2+=1
